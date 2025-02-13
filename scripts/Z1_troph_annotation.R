@@ -41,8 +41,9 @@ library(raster)
   data2511 %>% 
     group_by(genus) %>%
     summarise(no_rows = length(genus)) -> data2511_gn #df with genera 
-  
-  
+
+
+
 #------ 2. First Assignment  -------
 
   #before Joining, checking of the text format
@@ -84,13 +85,16 @@ library(raster)
   trophic_gen %>%
     rename(genus = `trophic_modes$Genus`) -> trophic_gen
   
-      
-      # Annotation -----------------
+  # annotation ------
   
       #initialisation
       levels(as.factor(trophic_gen$genus))->trophgenus #vector with all possible genera 
       levels(as.factor(trophic_gen$Trophy))->trophTrophy #same for trophic modes 
       levels(as.factor(trophic_gen$typeMX))->trophMX #same for types of mixotrophy 
+      
+      trophgenus
+      trophTrophy
+      trophMX
       
       vectorposition=c()
       repetitionNumberGenus=c()
@@ -116,7 +120,7 @@ library(raster)
       
       new_trophic_gen=matrix(c(trophgenus,newvectorMode,tpMX),length(trophgenus),3)
       new_trophic_gen<-as.data.frame(new_trophic_gen)#matrix with only one trophic type per genus 
-  
+      
   
   #================
   #we test if mixotrophic have homogeneous types of mixotrophy by genus 
@@ -136,6 +140,7 @@ library(raster)
   
   # --> we now have a reliable dataset for assigning trophic types by genera on MetPR2 dataset 
   
+  #on réalise une jointure des données MetaPR2 (lignes non assignées par espèces = join_gen) avec new_trophic_gen
 
 
 
@@ -217,17 +222,8 @@ library(raster)
 
   # Check if there is potential effect of depth in community structure 
   
-  hist(data2511[data2511$depth_level == "surface",]$depth)
-  hist(data2511[data2511$depth_level == "euphotic",]$depth, 1000)
-  
   sub_surf<-data2511[data2511$depth_level == "surface",]
   sub_euph<-data2511[data2511$depth_level == "euphotic",]
-  
-  
-  #plot of depth depending on latitude/longitude
-  ggplot(data2511, aes(x = latitude, y = depth , color = as.factor(project)))+
-    geom_point() +
-    scale_y_reverse()
   
   ggplot(data2511, aes(x = longitude, y = depth, color = as.factor(project)))+
     geom_point() +
@@ -270,12 +266,6 @@ library(raster)
     geom_sf(data = worldmap, color = "grey", fill = "grey") +
     theme(panel.background = element_rect(fill = "aliceblue")) +
     geom_point(data = subset(data2511, depth_level == 'surface'), aes(x = longitude, y = latitude))
-  
-  ggplot()+
-    geom_sf(data = worldmap, color = "grey", fill = "grey") +
-    theme(panel.background = element_rect(fill = "aliceblue")) +
-    geom_point(data = as.data.frame(data2511), aes(x = longitude, y = latitude, color = depth_level))
-
 
   #we remove samples which are below MLD 
     
@@ -291,7 +281,7 @@ library(raster)
   mld$value <- as.numeric(mld$value)
   
   
-  #turn .csv into raster layer 
+  #turn .csv into raster layer
   
   mld.sp2<-mld
   coordinates(mld.sp2) <- ~ longitude + latitude 
@@ -308,7 +298,6 @@ library(raster)
   #we create a sp object with sample location 
   samples.spatial <- data2511[,c(1,20,21)]
   coordinates(samples.spatial) <- ~ longitude + latitude 
-  plot(samples.spatial)
   
   #we extract the mld value for the ASV/samples dataset
   samples.mld<-as.data.frame(raster::extract(mld.rast, samples.spatial))
@@ -328,14 +317,10 @@ library(raster)
     #first we assign a 0 to each NA depth value
     data0401.1[is.na(data0401.1)] <- 0
     
-    summary(data0401$depth)
-    summary(data0401.1$depth)
-    
     data0401.2<-subset(data0401.1, depth < mld)
     
-    hist(data0401.2$depth)
-    
-    write_tsv(data0401.2, file = "data0401_2.tsv")
+    #write_tsv(data0401.2, file = "data0401_2.tsv")
+    write_csv(data0401.2, file = "data0401_2.csv")
     
     data0401.2 %>%
       group_by(species) %>%
@@ -412,6 +397,7 @@ library(raster)
     
     # here are the species which trophic type changed between schneider and mdb 
     mdb_correction.df[which(mdb_correction.df$TrophyS != mdb_correction.df$TrophyM),]
+    
     
     # now we try to spot species in mdb not in schneider and potentially in metapr2 dataset
     new_mixo <- mdb_only[which(mdb_only$Species.Name %in% evenness_sites_troph$species),]
