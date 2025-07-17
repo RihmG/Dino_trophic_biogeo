@@ -15,20 +15,20 @@ See the following details:
   
   # Evenness/Multivariate analyses
   
-    - Z1 script performs the trophic annotation of dinnoflagellate species.
-    - Z2 (bash) and Z3 script merges the observations into unique XY coordinates. 
-    - Z4 script tidies the environmental data prior to analysis. 
-    - Z5 script builds the ASVs summary plot found in the supplementary materials.
-    - Z6 script performs the evenness analysis and builds the Figure 1. 
-    - Z7 script performs the multivariate/ordinations analyses and builds the Figure 2. 
+  - Z1 script performs the trophic annotation of dinnoflagellate species.
+  - Z2 (bash) and Z3 script merges the observations into unique XY coordinates. 
+  - Z4 script tidies the environmental data prior to analysis. 
+  - Z5 script builds the ASVs summary plot found in the supplementary materials.
+  - Z6 script performs the evenness analysis and builds the Figure 1. 
+  - Z7 script performs the multivariate/ordinations analyses and builds the Figure 2. 
   
   # SDMs
   
-    - ZM1 creates monthly resolution species occurences from abundance matrix.
-    - ZM2 creates rasterized occurence datasets.
-    - ZM3 builds calibration datasets indluding rasterized occurence as well as environmental data fitted to the occurences.
-    - ZM4 performs species-specific environmental predictors selection.
-    - ZM5 performs individual models calibration.
-    - ZM6 computes Jaccard index for individual models and filter the models based on the results.
-    - ZM7 projects spatially the selected individual models and build ensemble models maps. 
-    - ZM8 builds Figures 3,4 and 5 based on the models outputs. 
+  - ZM1 creates monthly resolution species occurences from abundance matrix.
+  - ZM2 creates rasterized occurence datasets.
+  - ZM3 builds calibration datasets indluding rasterized occurence as well as environmental data fitted to the occurences.
+  - ZM4 performs species-specific environmental predictors selection.
+  - ZM5 performs individual models calibration.
+  - ZM6 computes Jaccard index for individual models and filter the models based on the results.
+  - ZM7 projects spatially the selected individual models and build ensemble models maps. 
+  - ZM8 builds Figures 3,4 and 5 based on the models outputs. 
