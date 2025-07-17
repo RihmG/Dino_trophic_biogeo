@@ -9,7 +9,7 @@ species list used for the species distribution modeling workflow (see folder 'sd
 The 'scripts' folder contains 2 types of scripts: R scripts and bash script. 
 
 Scripts starting with 'Z' refer to the data tyding and multivariate analyses conducted prior to the sdms analysis. 
-Scripts starting with 'ZM' (included in the 'sdms' folder refer to the species distribution modeling workflow. 
+Scripts starting with 'ZM' (included in the 'sdms' folder) refer to the species distribution modeling workflow. 
 
 See the following details: 
   
